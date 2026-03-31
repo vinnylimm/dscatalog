@@ -64,6 +64,9 @@ public class ProductService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public void delete(Long id){
+		if(!repository.existsById(id)){
+			throw new ResourceNotFoundException("Id not found" + id);
+		}
 		try{
 			repository.deleteById(id);
 		}
@@ -84,6 +87,9 @@ public class ProductService {
 
 		entity.getCategories().clear();
 		for (CategoryDTO catDto : dto.getCategories()){
+			if (catDto.getId() == null){
+				throw new IllegalArgumentException("Category id cannot be null");
+			}
 			Category category = categoryRepository.getOne(catDto.getId());
 			entity.getCategories().add(category);
 		}

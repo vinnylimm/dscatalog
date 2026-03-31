@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class ProductDTO {
 
-    private Long Id;
+    private Long id;
     private String name;
     private String description;
     private Double price;
@@ -23,7 +23,7 @@ public class ProductDTO {
     }
 
     public ProductDTO(Long id, String name, String description, Double price, String imgUrl, Instant date) {
-        Id = id;
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -32,7 +32,7 @@ public class ProductDTO {
     }
 
     public ProductDTO(Product entity) {
-        Id = entity.getId();
+        this.id = entity.getId();
         this.name = entity.getName();
         this.description = entity.getDescription();
         this.price = entity.getPrice();
@@ -46,11 +46,11 @@ public class ProductDTO {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {

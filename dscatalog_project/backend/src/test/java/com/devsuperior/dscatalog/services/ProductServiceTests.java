@@ -4,6 +4,7 @@ import com.devsuperior.dscatalog.dto.ProductDTO;
 import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
+import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,7 @@ public class ProductServiceTests {
 
         Mockito.lenient().doNothing().when(repository).deleteById(existingId);
         Mockito.lenient().doThrow(DataIntegrityViolationException.class).when(repository).deleteById(dependentId);
+        Mockito.lenient().doThrow(ResourceNotFoundException.class).when(repository).deleteById(nonExistingId);
     }
 
     @Test
@@ -80,6 +82,13 @@ public class ProductServiceTests {
 
     @Test
     public void deleteShouldThrowDatabaseExceptionWhenDependentId() {
+        Assertions.assertThrows(DatabaseException.class, () -> {
+            service.delete(dependentId);
+        });
+    }
+
+    @Test
+    public void deleteShouldThrowResourceNotFoundExceptionWhenIdDoesNotExists() {
         Assertions.assertThrows(DatabaseException.class, () -> {
             service.delete(dependentId);
         });
