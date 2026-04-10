@@ -90,7 +90,7 @@ public class ProductService {
 			if (catDto.getId() == null){
 				throw new IllegalArgumentException("Category id cannot be null");
 			}
-			Category category = categoryRepository.getOne(catDto.getId());
+			Category category = categoryRepository.getReferenceById(catDto.getId());
 			entity.getCategories().add(category);
 		}
 	}
