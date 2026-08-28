@@ -8,6 +8,8 @@ import com.devsuperior.dscatalog.tests.Factory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
@@ -26,6 +28,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProductResource.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class ProductResourceTests {
 
     @Autowired
@@ -81,7 +84,7 @@ public class ProductResourceTests {
                 .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk());
-        result.andExpect(jsonPath("$.Id").exists());
+        result.andExpect(jsonPath("$.id").exists());
         result.andExpect(jsonPath("$.name").exists());
         result.andExpect(jsonPath("$.description").exists());
     }
@@ -105,7 +108,7 @@ public class ProductResourceTests {
                 .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk());
-        result.andExpect(jsonPath("$.Id").exists());
+        result.andExpect(jsonPath("$.id").exists());
         result.andExpect(jsonPath("$.name").exists());
         result.andExpect(jsonPath("$.description").exists());
     }
